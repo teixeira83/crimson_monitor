@@ -1,0 +1,12 @@
+{
+  "name": "crimson-desert-monitor",
+  "version": "1.0.0",
+  "description": "Monitor Crimson Desert availability on Instant Gaming",
+  "main": "monitor.js",
+  "scripts": {
+    "start": "node monitor.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  }
+}
