@@ -21,21 +21,9 @@ function timestamp() {
 }
 
 function notify(title, message, url) {
-  // Windows toast notification via PowerShell
-  const psScript = `
-    Add-Type -AssemblyName System.Windows.Forms
-    $balloon = New-Object System.Windows.Forms.NotifyIcon
-    $balloon.Icon = [System.Drawing.SystemIcons]::Information
-    $balloon.BalloonTipIcon = 'Info'
-    $balloon.BalloonTipTitle = '${title.replace(/'/g, "''")}'
-    $balloon.BalloonTipText = '${message.replace(/'/g, "''")}'
-    $balloon.Visible = $true
-    $balloon.ShowBalloonTip(10000)
-    Start-Sleep -Seconds 5
-    $balloon.Dispose()
-  `;
+  const scriptPath = require("path").join(__dirname, "notify.ps1");
   exec(
-    `powershell -NoProfile -Command "${psScript.replace(/\n/g, " ")}"`,
+    `powershell -NoProfile -ExecutionPolicy Bypass -File "${scriptPath}" -Title "${title}" -Message "${message}"`,
     (err) => {
       if (err)
         console.log("  (toast notification failed, but alert is in console)");
@@ -118,6 +106,7 @@ async function checkAll() {
 }
 
 async function main() {
+  // SE LEU MAMOU
   console.log("=== Crimson Desert Stock Monitor ===");
   console.log(
     `Verificando ${PAGES.length} paginas a cada ${CHECK_INTERVAL_MS / 1000}s`
